@@ -17,8 +17,8 @@ class FavoriteViewModel extends ChangeNotifier{
     }
   }
   removeFromFavorites(Product product){
-    _favorites.remove(product);
-    notifyListeners();
+    final removed = _favorites.remove(product);
+    if(removed) notifyListeners();
   }
 
   toggleFavorite(Product product){
