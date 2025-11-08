@@ -24,6 +24,7 @@ class HomeTopSection extends StatelessWidget {
                 Text("Failed to load categories"),
                 const SizedBox(height: 8),
                 ElevatedButton(
+                  key: ValueKey("retry_button"),
                   onPressed: () => viewModel.getCategoryListCommand.execute(),
                   child: const Text("Retry"),
                 ),
@@ -39,6 +40,7 @@ class HomeTopSection extends StatelessWidget {
             final categories = viewModel.categoryList;
     
             return FiltersRow(
+              key: ValueKey("filters_row"),
               labels: [
                 "All",
                 ...categories

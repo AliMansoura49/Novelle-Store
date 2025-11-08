@@ -20,7 +20,7 @@ void main(){
             ) as ProductRepository
             ,
           ),
-          //Shared ViewModel
+          //Shared ViewModels
           ChangeNotifierProvider(
               create: (context)=> CartViewModel()
           ),

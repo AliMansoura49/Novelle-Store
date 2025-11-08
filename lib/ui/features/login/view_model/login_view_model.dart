@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,12 +6,12 @@ class LoginViewModel extends ChangeNotifier{
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool _isEmailValid = false;
-  bool _isPasswordValid = false;
+  bool _hasEmailFieldData = false;
+  bool _hasPasswordFieldData = false;
 
   String get email => emailController.text;
   String get password => passwordController.text;
-  bool  get enabled => _isEmailValid && _isPasswordValid;
+  bool  get enabled => _hasEmailFieldData && _hasPasswordFieldData;
 
 
   LoginViewModel(){
@@ -23,9 +21,8 @@ class LoginViewModel extends ChangeNotifier{
   
   void _updateState(){
     final previous = enabled;
-
-    _isEmailValid = emailController.text.isNotEmpty;
-    _isPasswordValid = passwordController.text.isNotEmpty;
+    _hasEmailFieldData = emailController.text.isNotEmpty;
+    _hasPasswordFieldData = passwordController.text.isNotEmpty;
     if(enabled != previous){
       notifyListeners();
     }
@@ -44,12 +41,10 @@ class LoginViewModel extends ChangeNotifier{
     }else {
       return null;
     }
-  
   }
 
   @override
   void dispose() {
-
     emailController.dispose();
     passwordController.dispose();
     super.dispose();

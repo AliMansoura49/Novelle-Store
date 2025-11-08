@@ -6,10 +6,12 @@ import 'package:store/utils/result.dart';
 
 class DetailsViewModel extends ChangeNotifier {
   final ProductRepository repo;
+  final int id;
   DetailsViewModel({
-    required this.repo
+    required this.repo,
+    required this.id,
     }){
-      loadProductByIdCommand = Command1(_getProductById);
+      loadProductByIdCommand = Command1(_getProductById)..execute(id);
     }
 
   late Command1<dynamic,int> loadProductByIdCommand;

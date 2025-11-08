@@ -5,62 +5,55 @@ import 'package:store/ui/features/details/view_models/details_view_model.dart';
 import 'package:store/ui/features/cart/view_models/cart_view_model.dart';
 import 'package:store/ui/features/favorite/view_models/favorite_view_model.dart';
 
-class DetailsScreen extends StatefulWidget {
-  final int id;
-  final DetailsViewModel viewModel;
-  const DetailsScreen({super.key, required this.id,required this.viewModel});
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
 
-  @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
-}
-
-class _DetailsScreenState extends State<DetailsScreen> {
-
-  @override
-  initState(){
-    super.initState();
-    widget.viewModel.loadProductByIdCommand.execute(widget.id);
-  }
-  
   @override
   Widget build(BuildContext context) {
+    final DetailsViewModel viewModel = context.read<DetailsViewModel>();
     final cartViewModel = context.read<CartViewModel>();
     final favoriteViewModel = context.read<FavoriteViewModel>();
-    return SafeArea(
-      child: Scaffold(
-        body: ListenableBuilder(
-          listenable: widget.viewModel.loadProductByIdCommand,
+    return Scaffold(
+      body: SafeArea(
+        child: ListenableBuilder(
+          listenable: viewModel.loadProductByIdCommand,
           builder: (context, child) {
-            if(widget.viewModel.loadProductByIdCommand.running){
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if(widget.viewModel.loadProductByIdCommand.error){
-                  Center(
-                    child: Text("Error: ${widget.viewModel.loadProductByIdCommand.result}"),
-                  );
-                }
-                if(widget.viewModel.product == null){
-                  return const Center(child: Text("No uiProduct found"));
-                }
-                debugPrint("product found, ${widget.viewModel.product!}");
-                return child!;
+            if (viewModel.loadProductByIdCommand.running) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (viewModel.loadProductByIdCommand.error) {
+              return Center(
+                child: Text("An error occurred while loading product details."),
+              );
+            }
+            return child!;
           },
           child: ListenableBuilder(
-              listenable: widget.viewModel,
-              builder: (context,child){
-                if(widget.viewModel.product == null) {
-                  return SizedBox();
-                }
-                return ProductDetailsCard(
-                  product: widget.viewModel.product!,
-                  isFavorite: context.select<FavoriteViewModel,bool>((vm)=>vm.isFavorite(widget.id)),
-                  onToggleFavorite: (id){
-                    favoriteViewModel.toggleFavorite(widget.viewModel.product!);
-                  },
-                );
-              })
-
-        )
+            listenable: viewModel,
+            builder: (context, child) {
+              if (viewModel.product == null) {
+                return SizedBox();
+              }
+              return Column(
+                children: [
+                  ProductDetailsCard(
+                    product: viewModel.product!,
+                    isFavorite: context.select<FavoriteViewModel, bool>((vm) => vm.isFavorite(viewModel.id)),
+                    onToggleFavorite: (id) {
+                      favoriteViewModel.toggleFavorite(viewModel.product!);
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      cartViewModel.addToCart(viewModel.product!);
+                    },
+                    child: const Text('Add to Cart'),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,12 +6,12 @@ class SignupViewModel extends ChangeNotifier {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool _isNameValid = false;
-  bool _isEmailValid = false;
-  bool _isPasswordValid = false;
+  bool _hasNameFieldData = false;
+  bool _hasEmailFieldData = false;
+  bool _hasPasswordFieldData = false;
 
 
-  bool  get enabled => _isEmailValid && _isNameValid && _isPasswordValid;
+  bool  get enabled => _hasEmailFieldData && _hasNameFieldData && _hasPasswordFieldData;
 
   SignupViewModel() {
     nameController.addListener(_updateState);
@@ -24,9 +22,9 @@ class SignupViewModel extends ChangeNotifier {
   void _updateState() {
     final previous = enabled;
 
-    _isNameValid = validateName(nameController.text) == null;
-    _isEmailValid = validateEmail(emailController.text) == null;
-    _isPasswordValid = validatePassword(passwordController.text) == null;
+    _hasNameFieldData = nameController.text.isNotEmpty;
+    _hasEmailFieldData = emailController.text.isNotEmpty;
+    _hasPasswordFieldData = passwordController.text.isNotEmpty;
 
     if (enabled != previous) {
       notifyListeners();
@@ -41,7 +39,7 @@ class SignupViewModel extends ChangeNotifier {
   }
 
   String? validateEmail(String? value){
-    if(value == null || EmailValidator.validate(value)){
+    if(value == null || !EmailValidator.validate(value)){
       return "Please enter a valid email address";
     }else{
       return null;

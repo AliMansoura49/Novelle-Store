@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class RoundedIconBox extends StatelessWidget {
   final IconData icon;
-  final width;
-  final height;
+  final double width;
+  final double height;
 
   const RoundedIconBox({
     super.key,

@@ -5,13 +5,13 @@ import 'package:store/ui/features/cart/widgets/cart_screen.dart';
 import 'package:store/ui/features/details/view_models/details_view_model.dart';
 import 'package:store/ui/features/favorite/widgets/favorite_screen.dart';
 import 'package:store/ui/features/home/view_models/home_view_model.dart';
-import 'package:store/ui/features/login/login_view_model/login_view_model.dart';
 import 'package:store/ui/features/login/widgets/login_screen.dart';
 import 'package:store/ui/features/signup/view_model/signup_view_model.dart';
 import 'package:store/ui/features/signup/widgets/signup_screen.dart';
 import '../ui/features/details/widgets/details_screen.dart';
 import '../ui/features/home/widgets/home_screen.dart';
 import 'package:provider/provider.dart';
+import '../ui/features/login/view_model/login_view_model.dart';
 
 GoRouter router() => GoRouter(
   initialLocation: Routes.home,
@@ -47,10 +47,13 @@ GoRouter router() => GoRouter(
         path: Routes.productDetails,
         builder: (context, state) {
           final id = int.parse(state.pathParameters['id']!);
-          final detailsViewModel = DetailsViewModel(
-            repo: context.read<ProductRepository>()
+          return ChangeNotifierProvider<DetailsViewModel>(
+            create: (context) => DetailsViewModel(
+              id: id,
+              repo: context.read<ProductRepository>(),
+            ),
+            builder: (context, child) => DetailsScreen(),
           );
-          return DetailsScreen(id: id,viewModel: detailsViewModel,);
         }
       ),
       GoRoute(path: Routes.cart,

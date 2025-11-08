@@ -11,10 +11,10 @@ void main(){
   provideDummy<Result<List<String>>>(Result.ok([]));
   provideDummy<Result<List<Product>>>(Result.ok([]));
 
-  late MockProductRepository mockRepo;
+  late MockProductRepositoryRemote mockRepo;
 
   setUp(() {
-    mockRepo = MockProductRepository();
+    mockRepo = MockProductRepositoryRemote();
   });
   group('getCategoryCommand', () {
     test('should update categoryList when repo returns Ok', () async {

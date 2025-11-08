@@ -1,7 +1,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:store/domain/models/dimension/dimensions.dart';
 import 'package:store/domain/models/product/product.dart';
 import 'package:store/ui/features/details/view_models/details_view_model.dart';
 import 'package:store/utils/result.dart';
@@ -9,12 +8,12 @@ import '../../../../mocks/mocks.dart';
 import '../../../../mocks/mocks.mocks.dart';
 
 void main(){
-  late MockProductRepository repo;
+  late MockProductRepositoryRemote repo;
   
   provideDummy(Result<Product>.ok(mockProduct));
 
   setUp(() {
-    repo = MockProductRepository();
+    repo = MockProductRepositoryRemote();
   });
 
   group("getProductById", (){
