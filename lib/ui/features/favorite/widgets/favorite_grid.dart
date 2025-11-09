@@ -13,7 +13,11 @@ class FavoriteGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.read<FavoriteViewModel>();
 
-    return GridView.builder(
+    return viewModel.favorites.isEmpty ? 
+    Center(
+      child: Text("No favorite products added yet."),
+    ) :
+     GridView.builder(
       itemCount: viewModel.favorites.length,
       itemBuilder: (context,index){
         final product = viewModel.favorites[index];
