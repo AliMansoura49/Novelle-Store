@@ -42,7 +42,7 @@ void main() {
 
 
 
-  testWidgets('should show circular progress indicator when loading data', (tester) async{
+  testWidgets('should show circular progress indicator while loading data', (tester) async{
     
     when(mockDetailsViewModel.loadProductByIdCommand)
       .thenReturn(FakeCommand1(isRunning: true));
@@ -76,11 +76,12 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       expect(find.byType(ProductDetailsCard), findsOneWidget);
 
-      final addToCartButton = find.widgetWithText(ElevatedButton, 'Add to Cart');
+      final addToCartButton = find.byKey(const Key('addToCartButton'));
       expect(addToCartButton, findsOneWidget);
 
       await tester.tap(addToCartButton);
       verify(mockCartViewModel.addToCart(mockProduct)).called(1);
+
   });
   
 }

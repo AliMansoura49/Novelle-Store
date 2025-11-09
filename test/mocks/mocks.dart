@@ -48,3 +48,6 @@ final mockProduct = Product(
   thumbnail: "thumbnail",
   weight: 0.2
   );
+
+final mockProduct2 = mockProduct.copyWith(id: 2, title: "title2");
+final mockProduct3 = mockProduct.copyWith(id: 3, title: "title3");

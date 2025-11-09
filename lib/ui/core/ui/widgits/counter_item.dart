@@ -21,6 +21,7 @@ class CounterItem extends StatelessWidget{
       children: [
         //minus
         IconButton(
+          key: Key("decrease_button"),
           onPressed: onDecrease,
            icon: Icon(
             Icons.remove,
@@ -32,6 +33,7 @@ class CounterItem extends StatelessWidget{
         ,Text(counter.toString(),style: textTheme.titleMedium,)
         //add
         ,IconButton(
+          key: Key("increase_button"),
           onPressed: onIncrease,
            icon: Icon(
             color: colorScheme.primary,

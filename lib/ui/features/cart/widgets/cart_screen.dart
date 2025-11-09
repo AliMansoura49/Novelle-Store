@@ -31,18 +31,20 @@ class CartScreen extends StatelessWidget {
         CartBottomBar(
         subtotal: cartViewModel.calculateSubtotal(), 
         onCheckout: (){
-          showDialog(context: context, builder: (context)=>LoadingDialog());
+          showDialog(context: context, builder: (context)=>LoadingDialog(key:  Key("loading_dialog")));
         }
       ),),
-      body: Consumer<CartViewModel>(
-       builder: (context,vm,child)=>
-       cartViewModel.addedToCartProducts.isEmpty ? Center(
-        child: Text(
-          "Your cart is empty",
-          style: Theme.of(context).textTheme.headlineMedium,
+      body: SafeArea(
+        child: Consumer<CartViewModel>(
+        builder: (context,vm,child)=>
+        cartViewModel.addedToCartProducts.isEmpty ? Center(
+          child: Text(
+            "Your cart is empty",
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ): CartList()
         ),
-       ): CartList()
-       )
+      )
       
     );
   }

@@ -9,7 +9,7 @@ import '../../../../mocks/mocks.mocks.dart';
 
 void main(){
   late MockProductRepositoryRemote repo;
-  
+  late DetailsViewModel sut;
   provideDummy(Result<Product>.ok(mockProduct));
 
   setUp(() {
@@ -21,7 +21,7 @@ void main(){
     test('should return a product when calling it with success result', ()async{
       when(repo.getProductById(any))
           .thenAnswer((_)async => Result.ok(mockProduct));
-      final sut = DetailsViewModel(repo: repo);
+      sut = DetailsViewModel(repo: repo,id: 1);
       int listenerCounter = 0;
       sut.addListener((){
         listenerCounter++;
@@ -37,7 +37,7 @@ void main(){
     test('should handle error when repo returns error result', ()async{
       when(repo.getProductById(any))
           .thenAnswer((_)async => Result.error(Exception("network error")));
-      final sut = DetailsViewModel(repo: repo);
+      sut = DetailsViewModel(repo: repo,id: 1);
       int listenerCounter = 0;
       sut.addListener((){
         listenerCounter++;

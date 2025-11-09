@@ -44,6 +44,7 @@ class DetailsScreen extends StatelessWidget {
                     },
                   ),
                   ElevatedButton(
+                    key: const Key('addToCartButton'),
                     onPressed: () {
                       cartViewModel.addToCart(viewModel.product!);
                     },

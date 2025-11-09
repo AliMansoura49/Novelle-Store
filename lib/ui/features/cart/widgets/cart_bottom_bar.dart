@@ -9,7 +9,7 @@ class CartBottomBar extends StatelessWidget {
   const CartBottomBar({
     super.key,
     required this.subtotal,
-    this.shipping = 5.0,
+    this.shipping = 0.05,
     required this.onCheckout
     });
 
@@ -76,7 +76,7 @@ class CartBottomBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "\$${(subtotal + shipping).toStringAsFixed(2)}",
+                  "\$${(subtotal*shipping + subtotal).toStringAsFixed(2)}",
                   style: textTheme.bodyLarge?.copyWith(
                     color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold

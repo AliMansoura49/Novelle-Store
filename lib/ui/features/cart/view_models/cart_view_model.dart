@@ -1,5 +1,3 @@
-
-import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:store/domain/models/product/product.dart';
 import 'package:store/ui/model/CartItem.dart';
@@ -33,7 +31,6 @@ class CartViewModel extends ChangeNotifier{
   removeFromCart(int index){
     final cartItem = addedToCartProducts[index];
     _addedToCartProducts.remove(cartItem);
-    log(" Removed from cart",name:"CartViewModel");
     notifyListeners();
   }
 
